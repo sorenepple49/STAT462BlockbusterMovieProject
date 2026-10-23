@@ -1,0 +1,15 @@
+---
+title: "Team Project"
+author: "Emily Haak" "Elizabeth Brooks" "Joseph Patrick" "Soren Epple"
+date: "2026-10-23"
+output: html_document
+---
+
+```{r}
+setwd("C:/Users/Emily Haak/OneDrive/OneDrive - The Pennsylvania State University/STAT 462")
+
+movie <- read.csv("movie_blockbusters.csv")
+head(movie)
+
+```
+
