@@ -47,9 +47,11 @@ boxplot(movie$runtime_min, main = "Boxplot of Movie Runtime", ylab = "Runtime (m
 
 hist(movie$popularity)
 hist(log(movie$popularity))
+boxplot(log(movie$popularity), main = "Boxplot of Log Movie Popularity", ylab = "Log Popularity")
 
 hist(movie$revenue_usd)
 hist(log(movie$revenue_usd))
+boxplot(log(movie$revenue_usd), main = "Boxplot of Log Movie Revenue", ylab = "Log Revenue (USD)")
 
 hist(movie$profit_usd)
 #cannot take log of negative numbers so this has to stay the same
