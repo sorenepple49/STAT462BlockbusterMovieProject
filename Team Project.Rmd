@@ -6,10 +6,31 @@ output: html_document
 ---
 
 ```{r}
-setwd("C:/Users/Emily Haak/OneDrive/OneDrive - The Pennsylvania State University/STAT 462")
+#setwd("C:/Users/Emily Haak/OneDrive/OneDrive - The Pennsylvania State University/STAT 462")
 
 movie <- read.csv("movie_blockbusters.csv")
 head(movie)
+
+#Counting the zeros in each column to see if there are unmeaningful zeros
+colSums(movie == 0, na.rm = TRUE)
+
+hist(movie$rating)
+min(movie$rating)
+max(movie$rating)
+
+
+plot(movie$budget_usd)
+hist(movie$budget_usd)
+min(movie$budget)
+max(movie$budget)
+
+hist(movie$runtime_min)
+min(movie$runtime_min)
+max(movie$runtime_min)
+
+
+
+
 
 ```
 
