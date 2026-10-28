@@ -10,27 +10,49 @@ output: html_document
 
 movie <- read.csv("movie_blockbusters.csv")
 head(movie)
+attach(movie)
+
+nrow(movie)
+#Dataset includes 5000 movies 
+
+summary(movie)
+
+cor(movie[,c(6,7,8,9,11,13)])
+
+# revenue and profit have the highest correlation of 0.9843939494
+
+table(movie$genre)
+
+table(movie$blockbuster)
+#673 blockbusters and 4327 non-blockbusters
+
 
 #Counting the zeros in each column to see if there are unmeaningful zeros
 colSums(movie == 0, na.rm = TRUE)
+#with the variables we are looking at there are no unmeaningful zeros
+
+colSums(is.na(movie))
+#checking if missing values in dataset - none 
 
 hist(movie$rating)
-min(movie$rating)
-max(movie$rating)
+boxplot(movie$rating, main = "Boxplot of Movie Ratings", ylab = "Rating")
 
-
-plot(movie$budget_usd)
 hist(movie$budget_usd)
-min(movie$budget)
-max(movie$budget)
+hist(log(movie$budget_usd))
+boxplot(log(movie$budget_usd), main = "Boxplot of Log Movie Budget", ylab = "Log Budget (USD)")
+#go with the log of budget 
 
 hist(movie$runtime_min)
-min(movie$runtime_min)
-max(movie$runtime_min)
+boxplot(movie$runtime_min, main = "Boxplot of Movie Runtime", ylab = "Runtime (minutes)")
 
+hist(movie$popularity)
+hist(log(movie$popularity))
 
+hist(movie$revenue_usd)
+hist(log(movie$revenue_usd))
 
-
+hist(movie$profit_usd)
+#cannot take log of negative numbers so this has to stay the same
 
 ```
 
