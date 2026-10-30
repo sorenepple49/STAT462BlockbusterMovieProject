@@ -54,7 +54,29 @@ hist(log(movie$revenue_usd))
 boxplot(log(movie$revenue_usd), main = "Boxplot of Log Movie Revenue", ylab = "Log Revenue (USD)")
 
 hist(movie$profit_usd)
-#cannot take log of negative numbers so this has to stay the same
+#cannot take log of negative numbers so this 
+
+
+movie_model1 <- lm(blockbuster~ rating + budget_usd + revenue_usd + runtime_min + profit_usd + popularity)
+summary(movie_model1)
+
+genre_model = lm(blockbuster~ genre)
+summary(genre_model)
+
+movie_model2 <- lm(blockbuster~ rating + log(budget_usd) + log(revenue_usd) + runtime_min + profit_usd + log(popularity))
+summary(movie_model2)
+
+# Histogram 
+hist(movie_model2$residuals)
+
+# QQ-plot
+qqnorm(movie_model2$residuals)
+qqline(movie_model2$residuals)
+
+# Shapiro test
+shapiro.test(movie_model2$residuals) 
+
+
 
 ```
 
