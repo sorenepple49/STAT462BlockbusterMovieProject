@@ -1,0 +1,11 @@
+boxplot(budget_usd ~ blockbuster, data = movie,
+        names = c("Not blockbuster", "Blockbuster"),
+        xlab = "Movie status",
+        ylab = "Budget (USD)",
+        main = "Budget by Blockbuster Status",
+        log = "y")
+
+movie[which.max(movie$budget_usd),
+      c("title", "budget_usd", "revenue_usd", "blockbuster")]
+
+## Note may need to change variable names to run code
