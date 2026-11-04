@@ -21,8 +21,6 @@ cor(movie[,c(6,7,8,9,11,13)])
 
 # revenue and profit have the highest correlation of 0.9843939494
 
-table(movie$genre)
-
 table(movie$blockbuster)
 #673 blockbusters and 4327 non-blockbusters
 
@@ -33,36 +31,54 @@ colSums(movie == 0, na.rm = TRUE)
 
 colSums(is.na(movie))
 #checking if missing values in dataset - none 
+```
 
+
+```{r}
 hist(movie$rating)
 boxplot(movie$rating, main = "Boxplot of Movie Ratings", ylab = "Rating")
+```
 
+```{r}
 hist(movie$budget_usd)
 hist(log(movie$budget_usd))
 boxplot(log(movie$budget_usd), main = "Boxplot of Log Movie Budget", ylab = "Log Budget (USD)")
 #go with the log of budget 
+```
 
+```{r}
 hist(movie$runtime_min)
 boxplot(movie$runtime_min, main = "Boxplot of Movie Runtime", ylab = "Runtime (minutes)")
+```
 
+```{r}
 hist(movie$popularity)
 hist(log(movie$popularity))
 boxplot(log(movie$popularity), main = "Boxplot of Log Movie Popularity", ylab = "Log Popularity")
+```
 
+```{r}
 hist(movie$revenue_usd)
 hist(log(movie$revenue_usd))
 boxplot(log(movie$revenue_usd), main = "Boxplot of Log Movie Revenue", ylab = "Log Revenue (USD)")
+```
 
+```{r}
 hist(movie$profit_usd)
 #cannot take log of negative numbers so this 
 
+```
 
+```{r}
+#Fitting first regression model
 movie_model1 <- lm(blockbuster~ rating + budget_usd + revenue_usd + runtime_min + profit_usd + popularity)
 summary(movie_model1)
 
+#Looking at genre by itself
 genre_model = lm(blockbuster~ genre)
 summary(genre_model)
 
+#Fitting model w/ log transformations
 movie_model2 <- lm(blockbuster~ rating + log(budget_usd) + log(revenue_usd) + runtime_min + profit_usd + log(popularity))
 summary(movie_model2)
 
@@ -77,5 +93,69 @@ qqline(movie_model2$residuals)
 shapiro.test(movie_model2$residuals) 
 
 
+
+```
+
+```{r}
+# budget by blockbuster status
+boxplot(budget_usd ~ blockbuster, data = movie,
+        names = c("Not blockbuster", "Blockbuster"),
+        xlab = "Movie status",
+        ylab = "Budget (USD)",
+        main = "Budget by Blockbuster Status",
+        log = "y") # need log transformation
+```
+
+
+```{r}
+# Rating by blockbuster status
+boxplot(rating ~ blockbuster, data = movie,
+        names = c("Not blockbuster", "Blockbuster"),
+        ylab = "Rating",
+        main = "Rating by Blockbuster Status")
+
+```
+
+
+```{r}
+# Runtime by blockbuster status
+boxplot(runtime_min ~ blockbuster, data = movie,
+        names = c("Not blockbuster", "Blockbuster"),
+        ylab = "Runtime (minutes)",
+        main = "Runtime by Blockbuster Status")
+```
+
+
+```{r}
+# Popularity by blockbuster status
+summary(movie$popularity)
+boxplot(popularity ~ blockbuster, data = movie,
+        names = c("Not blockbuster", "Blockbuster"),
+        ylab = "Popularity",
+        main = "Popularity by Blockbuster Status",
+        log = "y") # need log transformation
+
+```
+
+
+```{r}
+# revenue by blockbuster status
+summary(movie$revenue_usd)
+boxplot(revenue_usd ~ blockbuster, data = movie,
+        names = c("Not blockbuster", "Blockbuster"),
+        ylab = "Revenue (USD)",
+        main = "Revenue by Blockbuster Status",
+        log = "y") # need log transformation
+
+```
+
+
+```{r}
+# profit by blockbuster status
+summary(movie$profit_usd)
+boxplot(profit_usd ~ blockbuster, data = movie,
+        names = c("Not blockbuster", "Blockbuster"),
+        ylab = "Profit (USD)",
+        main = "Profit by Blockbuster Status")
 ```
 
