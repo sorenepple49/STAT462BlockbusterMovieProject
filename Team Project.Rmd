@@ -19,6 +19,9 @@ summary(movie)
 
 cor(movie[,c(6,7,8,9,11,13)])
 
+#scatterplot matrix
+plot(movie[,c(6,7,8,9,11,13)])
+
 # revenue and profit have the highest correlation of 0.9843939494
 
 table(movie$blockbuster)
@@ -95,6 +98,61 @@ shapiro.test(movie_model2$residuals)
 
 
 ```
+
+
+
+```{r}
+library(car)
+#taking out insignificant predictors from movie_model2
+
+movie_model3 <- lm(blockbuster~ log(budget_usd) + log(revenue_usd) + runtime_min + profit_usd)
+summary(movie_model3)
+
+# Histogram 
+hist(movie_model3$residuals)
+
+# QQ-plot
+qqnorm(movie_model3$residuals)
+qqline(movie_model3$residuals)
+
+# Shapiro test
+shapiro.test(movie_model3$residuals) 
+
+#taking anova of two models 
+#shows that removing insignificant predictors does not change the fit of the model 
+#however dont want to overfit so go with reduced model
+anova(movie_model3, movie_model2)
+
+#Checking colinearity
+vif(movie_model3)
+
+#Gets ride of collinearity problems but reduces R^2
+movie_model4 <- lm(blockbuster~ log(budget_usd) + runtime_min + profit_usd)
+summary(movie_model4)
+
+#checking collinearity 
+vif(movie_model4)
+
+```
+
+```{r}
+#colinearity and outliers 
+# Computing leverage and drawing leverage plot and adding threshold lines
+h <- hatvalues(movie_model3)
+p <- length(movie_model3$coefficients)
+n <- length(movie$blockbuster)
+plot(h,xlab='Observation',ylab='Leverage',main='Leverage')
+abline(h=2*p/n,lty=2,col="red")
+abline(h=3*p/n,lty=2,col="blue")
+
+#Determining which observations have a leverage over 2*p/n
+which(h>2*p/n)
+
+
+
+```
+
+
 
 ```{r}
 # budget by blockbuster status
